@@ -1,0 +1,62 @@
+import java.util.*;
+public class Main {
+
+    public static void printArray(int arr[]){
+        for (int i = 0; i<arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+    }
+
+    //Take input from user
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter array size");
+        int size = sc.nextInt();
+        System.out.println("Enter input");
+        int arr[] = new int[size];
+        for(int i = 0;i<size;i++){
+            arr[i]= sc.nextInt();
+        }
+
+        //Display the entered array
+        System.out.println("Entered array is:- " );
+        printArray(arr);
+
+    //Bubble sort
+       for( int i = 0; i < arr.length; i++){
+           for(int j = 0; j < arr.length - 1; j++){
+
+               //condition
+               if (arr[j] > arr[j+1]){
+
+                   //swaping
+                   int temp = arr[j];
+                   arr[j]=arr[j+1];
+                   arr[j+1]=temp;
+
+               }
+           }
+       }
+        System.out.println();
+        System.out.println("Sorted array is:- ");
+        printArray(arr);
+    }
+}
+
+
+Output:-
+Enter array size
+6
+Enter input
+7
+8
+9
+12
+3
+4
+Entered array is:- 
+7 8 9 12 3 4 
+
+Sorted array is:- 
+3 4 7 8 9 12

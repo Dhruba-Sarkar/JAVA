@@ -1,0 +1,36 @@
+import java.util.*;
+public class Strings {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        //input
+        System.out.println("Enter 1st Name");
+        String name1 = sc.nextLine();
+        System.out.println("Enter 2nd Name");
+        String name2 = sc.nextLine();
+        String fullName = name1 +" "+ name2;
+        //System.out.println(fullName.length());
+
+        //charAt
+//        for(int i = 0;i<fullName.length();i++){
+//            System.out.println(fullName.charAt(i));
+//        }
+        //name1>name2 = +ve value
+        //name1=name2 = 0
+        //name1<name2 = -ve value
+//        if(name1.compareTo(name2)==0){
+//            System.out.println("The Strings are Equal");
+//        }else{
+//            System.out.println("The Strings are not Equal");
+//        }
+
+        //substring
+        System.out.println(fullName.substring(5,fullName.length()));
+    }
+}
+
+Output:-Enter 1st Name
+Tony
+Enter 2nd Name
+Stark
+Stark
