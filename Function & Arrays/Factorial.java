@@ -1,22 +1,19 @@
 import java.util.Scanner;
 
 public class Factorial {
-    //method
-    public static int calculateFactorial(int n){
+    // method
+    public static int calculateFactorial(int n) {
         int factorial = 1;
-        for( int i = 1; i <=n; i++) {
+        for (int i = 1; i <= n; i++) {
             factorial = factorial * i;
         }
-            return factorial;
-        }
+        return factorial;
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         System.out.println("The factorial of " + n + " is " + calculateFactorial(n));
+        sc.close();
     }
 }
-
-Output:-
-5
-The factorial of 5 is 120
