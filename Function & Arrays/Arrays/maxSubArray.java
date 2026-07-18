@@ -5,10 +5,14 @@ import java.util.Scanner;
 public class maxSubArray {
     public int maxSubArrays(int[] arr) {
         int maxSum = Integer.MIN_VALUE;
+        int startEi = 0;
+        int endEi = 0;
         int currentSum = 0;
         for (int i = 0; i < arr.length; i++) {
             currentSum += arr[i];
             if (currentSum > maxSum) {
+                startEi = currentSum;
+                endEi = i;
                 maxSum = currentSum;
             }
             if (currentSum < 0) {
