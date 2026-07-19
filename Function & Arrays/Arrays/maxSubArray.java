@@ -5,21 +5,27 @@ import java.util.Scanner;
 public class maxSubArray {
     public int maxSubArrays(int[] arr) {
         int maxSum = Integer.MIN_VALUE;
-        int startEi = 0;
-        int endEi = 0;
+        int tempSi = 0;
+        int si = -1;
+        int ei = -1;
         int currentSum = 0;
         for (int i = 0; i < arr.length; i++) {
             currentSum += arr[i];
+
             if (currentSum > maxSum) {
-                startEi = currentSum;
-                endEi = i;
                 maxSum = currentSum;
+                si = tempSi;
+                ei = i;
             }
             if (currentSum < 0) {
                 currentSum = 0;
+                tempSi = i + 1;
             }
+
         }
+        System.out.println("Start index : " + si + " , " + "Ending index : " + ei);
         return maxSum;
+
     }
 
     public static void main(String[] args) {
