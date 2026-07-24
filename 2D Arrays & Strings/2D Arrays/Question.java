@@ -67,12 +67,58 @@ public class Question {
         }
     }
 
+    // Spiral Matrix
+    public static void SpiralMatrix(int[][] arr) {
+
+        int n = arr.length;
+        int m = arr[0].length;
+
+        int top = 0;
+        int bottom = n - 1;
+        int left = 0;
+        int right = m - 1;
+
+        while (top <= bottom && left <= right) {
+
+            // Top Rows
+            for (int row = top, col = left; col <= right; col++) {
+                System.out.print(arr[row][col] + "  ");
+            }
+            top++;
+
+            // Right Cols
+            for (int row = top, col = right; row <= bottom; row++) {
+                System.out.print(arr[row][col] + " ");
+            }
+            right--;
+
+            // Bottom Rows
+            if (top <= bottom) {
+                for (int row = bottom, col = right; col >= left; col--) {
+                    System.out.print(arr[row][col] + " ");
+                }
+                bottom--;
+            }
+
+            // Left Cols
+            if (left <= right) {
+                for (int row = bottom, col = left; row >= top; row--) {
+                    System.out.print(arr[row][col] + " ");
+
+                }
+                left++;
+            }
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
         int[][] arr = { { 1, 2, 3, 4, 5, 6 },
                 { 17, 19, 13, 11, 9, 7 },
                 { 22, 15, 12, 10, 8, 20 },
                 { 18, 21, 23, 14, 23, 16 }
         };
-        WaveTraversal(arr);
+        // WaveTraversal(arr);
+        SpiralMatrix(arr);
     };
 }
