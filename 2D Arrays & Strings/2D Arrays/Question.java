@@ -44,7 +44,7 @@ public class Question {
     }
 
     // Wave Traversal
-    public static void WaveTraversal(int[][] arr) {
+    public static void waveTraversal(int[][] arr) {
         int n = arr.length;
         int m = arr[0].length;
 
@@ -68,7 +68,7 @@ public class Question {
     }
 
     // Spiral Matrix
-    public static void SpiralMatrix(int[][] arr) {
+    public static void spiralMatrix(int[][] arr) {
 
         int n = arr.length;
         int m = arr[0].length;
@@ -112,13 +112,50 @@ public class Question {
         }
     }
 
+    // Transpose of Matrix
+    public static void transposeMatrix(int[][] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int temp = arr[i][j];
+                arr[i][j] = arr[j][i];
+                arr[j][i] = temp;
+            }
+        }
+        System.out.println();
+
+        for (int i = 0; i < n; i++) {
+            reverse(arr[i]);
+        }
+    }
+
+    // Reverse of Matrix
+    public static void reverse(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        while (start < end) {
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         int[][] arr = { { 1, 2, 3, 4, 5, 6 },
-                { 17, 19, 13, 11, 9, 7 },
-                { 22, 15, 12, 10, 8, 20 },
-                { 18, 21, 23, 14, 23, 16 }
+                { 17, 19, 23, 31, 37, 39 },
+                { 22, 24, 32, 40, 41, 50 },
+                { 13, 26, 33, 44, 43, 56 },
+                { 27, 35, 44, 46, 48, 53 },
+                { 58, 61, 52, 54, 63, 69 }
         };
-        // WaveTraversal(arr);
-        SpiralMatrix(arr);
+        // waveTraversal(arr);
+        // spiralMatrix(arr);
+        transposeMatrix(arr);
     };
 }
