@@ -1,8 +1,7 @@
-
-import java.util.Scanner;
+import java.util.*;
 
 public class reverseArray {
-    public static void reverseArray(int number[]) {
+    public static void reverse(int number[]) {
         int start = 0;
         int end = number.length - 1;
         while (start < end) {
@@ -27,7 +26,7 @@ public class reverseArray {
             number[i] = scn.nextInt();
         }
         System.out.println("Reversed array is: ");
-        reverseArray(number);
+        reverse(number);
         scn.close();
     }
 

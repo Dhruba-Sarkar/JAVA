@@ -1,5 +1,3 @@
-package Arrays;
-
 public class firstAndLastOcc {
     public int firstOcc(int[] arr, int tar) {
         int left = 0;

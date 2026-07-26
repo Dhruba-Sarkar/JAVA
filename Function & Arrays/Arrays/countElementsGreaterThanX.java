@@ -1,5 +1,3 @@
-package Arrays;
-
 import java.util.Scanner;
 
 class countElementsGreaterThanX {

@@ -1,5 +1,3 @@
-package Arrays;
-
 public class findFloorAndCeil {
     public static void floorAndCeil(int[] arr, int tar) {
         int floor = Integer.MIN_VALUE;

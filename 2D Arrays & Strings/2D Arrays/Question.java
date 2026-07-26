@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Question {
 
@@ -153,6 +152,7 @@ public class Question {
                 { 13, 26, 33, 44, 43, 56 },
                 { 27, 35, 44, 46, 48, 53 },
                 { 58, 61, 52, 54, 63, 69 }
+
         };
         // waveTraversal(arr);
         // spiralMatrix(arr);
