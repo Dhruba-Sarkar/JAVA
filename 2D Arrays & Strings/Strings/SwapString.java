@@ -1,5 +1,6 @@
 import java.util.*;
-public class Main {
+
+public class SwapString {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter The String : ");
@@ -10,17 +11,19 @@ public class Main {
             int front = i;
             int back = sb.length() - i - 1;
 
-        char frontChar = sb.charAt(front);
-        char backChar = sb.charAt(back);
-        sb.setCharAt(front, backChar);
-        sb.setCharAt(back, frontChar);
-    }
+            char frontChar = sb.charAt(front);
+            char backChar = sb.charAt(back);
+            sb.setCharAt(front, backChar);
+            sb.setCharAt(back, frontChar);
 
-        System.out.println(sb);
+            sc.close();
+        }
+
+        System.out.println("The Reverse String is : " + sb);
     }
 }
 
-Output:-
-Enter The String : 
-dhruba sarkar
-rakras aburhd
+// Output:-
+// Enter The String :
+// dhruba sarkar
+// rakras aburhd
