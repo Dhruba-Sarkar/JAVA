@@ -145,6 +145,93 @@ public class Question {
         System.out.println();
     }
 
+    // Find Key
+    public static boolean findKey(int arr[][], int key) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                if (arr[i][j] == key) {
+                    System.out.println("key found at index (" + i + "," + j + ")");
+                    return true;
+                }
+            }
+        }
+        System.out.println("key not found");
+        return false;
+    }
+
+    // Largest OR Smallest
+    public static void largestOrSmallest(int arr[][]) {
+        int largest = Integer.MIN_VALUE;
+        int smallest = Integer.MAX_VALUE;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                if (largest < arr[i][j]) {
+                    largest = arr[i][j];
+                }
+                if (smallest > arr[i][j]) {
+                    smallest = arr[i][j];
+                }
+            }
+        }
+        System.out.println("Largest number is " + largest);
+        System.out.println("Smallest number is " + smallest);
+    }
+
+    // Diagonal Sum
+    public static int diagonalSum(int arr[][]) {
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i][i];
+            if (i != arr.length - 1 - i) {
+                sum += arr[i][arr.length - 1 - i];
+            }
+        }
+        return sum;
+    }
+
+    // Stair Case Search
+    public static boolean staircaseSearch(int matrix[][], int key) {
+        int row = 0;
+        int col = matrix[0].length - 1;
+        while (row < matrix.length && col >= 0) {
+            if (matrix[row][col] == key) {
+                System.out.println("key found at (" + row + "," + col + ")");
+                return true;
+            } else if (key < matrix[row][col]) {
+                col--;
+            } else {
+                row++;
+            }
+
+        }
+        System.out.println("Key not found");
+        return false;
+    }
+
+    // Count 7
+    public static int count7(int arr[][], int key) {
+        int count7 = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i; j < arr[i].length; j++) {
+                if (arr[i][j] == 7) {
+                    count7++;
+                }
+            }
+        }
+        System.out.println("count of 7 is " + count7);
+        return count7;
+    }
+
+    // Sum Of Arrays
+    public static int sumOf2ndArray(int arr[][]) {
+        int sum = 0;
+        for (int i = 0; i < arr[0].length; i++) {
+            sum += arr[1][i];
+        }
+        System.out.println("sum is " + sum);
+        return sum;
+    }
+
     public static void main(String[] args) {
         int[][] arr = { { 1, 2, 3, 4, 5, 6 },
                 { 17, 19, 23, 31, 37, 39 },
@@ -156,6 +243,7 @@ public class Question {
         };
         // waveTraversal(arr);
         // spiralMatrix(arr);
-        transposeMatrix(arr);
+        // transposeMatrix(arr);
+        System.out.println("Total Diagonal Sum is: " + diagonalSum(arr));
     };
 }

@@ -1,5 +1,6 @@
 import java.util.*;
-public class TwoDArrays {
+
+public class findX {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Rows Count : ");
@@ -8,11 +9,10 @@ public class TwoDArrays {
         int colms = sc.nextInt();
         int[][] numbers = new int[rows][colms];
 
-
         System.out.println("Enter Input : ");
-        //input
-        for(int i = 0; i<rows; i++) {
-            for (int j = 0; j<colms; j++) {
+        // input
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < colms; j++) {
                 numbers[i][j] = sc.nextInt();
             }
         }
@@ -20,29 +20,14 @@ public class TwoDArrays {
         System.out.println("Enter Number to find : ");
         int x = sc.nextInt();
 
-        //output
-        for(int i=0; i<rows; i++) {
+        // output
+        for (int i = 0; i < rows; i++) {
             for (int j = 0; j < colms; j++) {
-                if (numbers[i][j]==x) {
-                    System.out.println("X found at " + i +","+ j);
+                if (numbers[i][j] == x) {
+                    System.out.println("X found at " + i + "," + j);
                 }
             }
         }
+        sc.close();
     }
 }
-
-Output: 
-
-Enter Rows Count : 
-3
-Enter Colms Count : 
-4
-Enter Input : 
-1 2 3 4
-5 6 7 8
-9 10 11 12
-Enter Number to find : 
-11
-X found at 2,2
-
-Process finished with exit code 0
