@@ -1,6 +1,6 @@
 package Recursion;
 
-public class Main {
+public class Question {
     // Print Decreasing
     public static void printDecreasing(int n) {
         if (n == 0) {
