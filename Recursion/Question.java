@@ -66,16 +66,48 @@ public class Question {
         return ans;
     }
 
+    // print zig-zag
+    public static void printZigZag(int n) {
+        if (n == 0)
+            return;
+
+        System.out.println("pre-area " + n);
+
+        printZigZag(n - 1);
+
+        System.out.println("in-area " + n);
+
+        printZigZag(n - 1);
+
+        System.out.println("post-area " + n);
+    }
+
+    // tower of hanoi
+    public static void TOH(int n, int A, int C, int B) {
+        if (n == 0) {
+            return;
+        }
+
+        TOH(n - 1, A, B, C);
+
+        System.out.println("Moving disc " + n + " from " + A + " -> " + C);
+
+        TOH(n - 1, B, C, A);
+    }
+
     public static void main(String[] args) {
         // printDecreasing(5);
         // printIncreasing(7);
         // printDecInc(4);
         // int n = 5;
         // System.out.println(fact(n));
+        // printZigZag(3);
 
-        int x = 2;
-        int y = 5;
-        System.out.println(power(x, y));
-        System.out.println(power_log(x, y));
+        // int x = 2;
+        // int y = 5;
+        // System.out.println(power(x, y));
+        // System.out.println(power_log(x, y));
+
+        TOH(3, 10, 30, 200);
     }
 }
