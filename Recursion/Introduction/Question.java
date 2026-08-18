@@ -1,4 +1,4 @@
-package Recursion;
+package Introduction;
 
 public class Question {
     // Print Decreasing
@@ -53,7 +53,7 @@ public class Question {
     }
 
     // Find X raised to the power Y
-    // Log(y)
+    // 0(Log(y))
     public static int power_log(int x, int y) {
         if (y == 0) {
             return 1;
