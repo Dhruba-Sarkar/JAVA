@@ -85,11 +85,42 @@ public class Questions {
         }
     }
 
+    // Print Encoding
+    public static void printEncoding(String str, String asf) {
+        if (str.length() == 0) {
+            System.out.println(asf);
+            return;
+        }
+
+        // we can take one character at a time
+        int firstNum = str.charAt(0) - '0';
+        if (firstNum == 0)
+            return;
+
+        char cl = (char) ('a' + (firstNum - 1));
+        String smallerString = str.substring(1);
+
+        printEncoding(smallerString, asf + cl);
+
+        // we can take two character at a time
+        if (str.length() >= 2) {
+            String first2Letter = str.substring(0, 2);
+            int first2Num = Integer.parseInt(first2Letter);
+
+            if (first2Num <= 26) {
+                cl = (char) ('a' + (first2Num - 1));
+                smallerString = str.substring(2);
+                printEncoding(smallerString, asf + cl);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         // printSubSequence("abc", " ");
         // printKPC("789", "");
         // printStairPaths(4, "");
         // printMazePaths(0, 0, 1, 2, "");
-        printMazePathWithJumps(0, 0, 2, 2, "");
+        // printMazePathWithJumps(0, 0, 2, 2, "");
+        printEncoding("1234", "");
     }
 }
