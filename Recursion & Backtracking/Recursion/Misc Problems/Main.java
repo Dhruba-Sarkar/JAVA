@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Main {
 
@@ -25,21 +26,34 @@ public class Main {
         return findMaxSum(grid, 0, 0, grid.length, grid[0].length);
     }
 
-    // Permutaion of String
-    public static void permutaitionOfString(String str, String asf) {
+    // Permutations of String
+    public static ArrayList<String> permutationsOfString(String str) {
+        ArrayList<String> ans = new ArrayList<>();
 
         if (str.length() == 0) {
-            System.out.println(asf);
-            return;
+            ans.add("");
+            return ans;
         }
 
         char firstChar = str.charAt(0);
-        String sm = str.substring(1);
-        permutaitionOfString(str, asf + firstChar);
+        String smst = str.substring(1);
+        ArrayList<String> sm = permutationsOfString(smst);
+
+        for (int i = 0; i < sm.size(); i++) {
+            String s = sm.get(i);
+            for (int j = 0; j <= s.length(); j++) {
+                String leftPart = s.substring(0, j);
+                String rightPart = s.substring(j);
+                ans.add(leftPart + firstChar + rightPart);
+            }
+        }
+        return ans;
     }
 
     public static void main(String[] args) {
-        int[][] grid = { { 3, 6, 1 }, { 2, 3, 4 }, { 5, 5, 1 } };
-        System.out.println(maxSum(grid));
+        // int[][] grid = { { 3, 6, 1 }, { 2, 3, 4 }, { 5, 5, 1 } };
+        // System.out.println(maxSum(grid));
+
+        System.out.println(permutationsOfString("ABC"));
     }
 }
