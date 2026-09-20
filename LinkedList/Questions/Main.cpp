@@ -175,3 +175,81 @@ ListNode *oddEvenList(ListNode *head)
 
     return oddListHead;
 }
+
+// Leetcode 25 -> Reverse nodes in k group
+class Solution
+{
+public:
+    int getSize(ListNode *head)
+    {
+
+        int size = 0;
+        ListNode *temp = head;
+
+        while (temp != nullptr)
+        {
+            temp = temp->next;
+            size++;
+        }
+
+        return size;
+    }
+
+    ListNode *oHead = nullptr;
+    ListNode *oTail = nullptr;
+    ListNode *tHead = nullptr;
+    ListNode *tTail = nullptr;
+
+    void addFirst(ListNode *node)
+    {
+        if (tHead == nullptr)
+        {
+            tHead = node;
+            tTail = node;
+        }
+        else
+        {
+            node->next = tHead;
+            tHead = node;
+        }
+    }
+
+    ListNode *reverseKGroup(ListNode *head, int k)
+    {
+        int size = getSize(head);
+        ListNode *ptr = head;
+
+        while (size >= k)
+        {
+            int currentK = k;
+
+            while (currentK-- > 0)
+            { // will create a reversed list of K size
+
+                // isolate ptr
+                ListNode *ptrKaNext = ptr->next;
+                ptr->next = nullptr;
+                addFirst(ptr);
+                ptr = ptrKaNext;
+            }
+
+            // add to original LinkedList(addLast)
+            if (oHead == nullptr)
+            {
+                oHead = tHead;
+                oTail = tTail;
+            }
+            else
+            {
+                oTail->next = tHead;
+                oTail = tTail;
+            }
+            // prepare for next
+            size -= k;
+            tHead = nullptr;
+            tTail = nullptr;
+        }
+        oTail->next = ptr;
+        return oHead;
+    }
+};

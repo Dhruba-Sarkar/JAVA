@@ -170,6 +170,110 @@ public class Main {
         return oddListHead;
     }
 
+    // Leetcode 25 -> Reverse nodes in k group
+    class Solution {
+        public int getSize(ListNode head) {
+            int size = 0;
+            ListNode temp = head;
+
+            while (temp != null) {
+                temp = temp.next;
+                size++;
+            }
+
+            return size;
+
+        }
+
+        // Global variables
+        ListNode oHead = null;
+        ListNode oTail = null;
+        ListNode tHead = null;
+        ListNode tTail = null;
+
+        public void addFirst(ListNode node) {
+            if (tHead == null) {
+                tHead = node;
+                tTail = node;
+            } else {
+                node.next = tHead;
+                tHead = node;
+            }
+        }
+
+        public ListNode reverseKGroup(ListNode head, int k) {
+            int size = getSize(head);
+            ListNode ptr = head;
+
+            while (size >= k) {
+                int currentK = k;
+
+                while (currentK-- > 0) { // will create a reversed list of K size
+
+                    // isolate ptr
+                    ListNode ptrKaNext = ptr.next;
+                    ptr.next = null;
+                    addFirst(ptr);
+                    ptr = ptrKaNext;
+                }
+
+                // add to original LinkedList(addLast)
+                if (oHead == null) {
+                    oHead = tHead;
+                    oTail = tTail;
+
+                } else {
+                    oTail.next = tHead;
+                    oTail = tTail;
+                }
+                // prepare for next
+                size -= k;
+                tHead = null;
+                tTail = null;
+
+            }
+            oTail.next = ptr;
+            return oHead;
+        }
+    }
+
+    // Leetcode 83 -> Remove Duplicates from Sorted List
+    public ListNode deleteDuplicates1(ListNode head) {
+        ListNode curr = head;
+        while (curr != null && curr.next != null) {
+            if (curr.val == curr.next.val) {
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+        return head;
+    }
+
+    // Leetcode 82 -> Remove Duplicates from Sorted List II
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head != null && head.next == null) {
+            return head;
+        }
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode curr = dummy;
+        while (curr.next != null && curr.next.next != null) {
+            if (curr.next.val == curr.next.next.val) {
+                ListNode temp = curr.next;
+                int duplicateVal = curr.next.val;
+                while (temp != null && temp.val == duplicateVal) {
+                    temp = temp.next;
+                }
+                curr.next = temp;
+            } else {
+                curr = curr.next;
+            }
+        }
+
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
         //
     }
