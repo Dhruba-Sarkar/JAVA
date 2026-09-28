@@ -43,6 +43,29 @@ bool isValid(string s)
     return st.size() == 0;
 }
 
+// Next Greater Element on Right ->
+// (https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1)
+vector<int> nextLargerElement(vector<int> &arr)
+{
+
+    int n = arr.size();
+    vector<int> ngr(n, -1);
+    stack<int> st;
+
+    for (int i = 0; i < n; i++)
+    {
+        int currEle = arr[i];
+
+        while (st.size() > 0 && arr[st.top()] < currEle)
+        {
+            ngr[st.top()] = currEle;
+            st.pop();
+        }
+        st.push(i);
+    }
+    return ngr;
+}
+
 void main()
 {
 }
