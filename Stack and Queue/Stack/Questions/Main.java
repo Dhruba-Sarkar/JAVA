@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-import Pattern.hRectangle;
-
 class Main {
     public static boolean isDuplicateBracket(String str) {
         Stack<Character> st = new Stack<>();
@@ -203,6 +201,72 @@ class Main {
             maxArea = Math.max(maxArea, h * w);
         }
         return maxArea;
+    }
+
+    // Leetcode 84 -> Largest Rectangle in Histogram(Optimized)
+    public int largestRectangleArea1(int[] heights) {
+        int n = heights.length;
+
+        int maxArea = 0;
+
+        Stack<Integer> st = new Stack<>();
+        st.push(-1);
+
+        for (int i = 0; i < n; i++) {
+            while (st.peek() != -1 && heights[st.peek()] > heights[i]) {
+                int poppedIndex = st.pop();
+
+                int h = heights[poppedIndex];
+                int nsr = i;
+                int nsl = st.peek();
+
+                maxArea = Math.max(maxArea, h * (nsr - nsl - 1));
+            }
+            st.push(i);
+        }
+        while (st.peek() != -1) {
+            int poppedIndex = st.pop();
+
+            int h = heights[poppedIndex];
+            int nsr = n;
+            int nsl = st.peek();
+
+            maxArea = Math.max(maxArea, h * (nsr - nsl - 1));
+        }
+
+        return maxArea;
+    }
+
+    // Leetcode 239 -> Sliding Window Maximum
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+
+        int[] ngr = new int[n];
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            while (st.size() > 0 && nums[st.peek()] < nums[i]) {
+                ngr[st.pop()] = i;
+            }
+            st.push(i);
+        }
+        while (st.size() > 0) {
+            ngr[st.pop()] = n;
+        }
+        int[] ans = new int[n - k + 1];
+        int ansIdx = 0;
+
+        for (int idx = 0; idx < ans.length; idx++) { // idx = starting point of window
+            if (ansIdx < idx) {
+                ansIdx = idx;
+            }
+
+            while (ngr[ansIdx] < idx + k) {
+                ansIdx = ngr[ansIdx];
+            }
+            ans[idx] = nums[ansIdx];
+        }
+        return ans;
     }
 
 }

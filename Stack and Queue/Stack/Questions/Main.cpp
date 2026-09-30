@@ -65,6 +65,47 @@ vector<int> nextLargerElement(vector<int> &arr)
     }
     return ngr;
 }
+// Leetcode 239 -> Sliding Window Maximum
+vector<int> maxSlidingWindow(vector<int> &nums, int k)
+{
+    int n = nums.size();
+
+    vector<int> ngr(n);
+    stack<int> st;
+    for (int i = 0; i < n; i++)
+    {
+        while (st.size() > 0 && nums[st.top()] < nums[i])
+        {
+            int poppedIndex = st.top();
+            st.pop();
+            ngr[poppedIndex] = i;
+        }
+        st.push(i);
+    }
+    while (st.size() > 0)
+    {
+        int poppedIndex = st.top();
+        st.pop();
+        ngr[poppedIndex] = n;
+    }
+    vector<int> ans(n - k + 1);
+    int ansIdx = 0;
+
+    for (int idx = 0; idx < ans.size(); idx++)
+    { // idx = starting point of window
+        if (ansIdx < idx)
+        {
+            ansIdx = idx;
+        }
+
+        while (ngr[ansIdx] < idx + k)
+        {
+            ansIdx = ngr[ansIdx];
+        }
+        ans[idx] = nums[ansIdx];
+    }
+    return ans;
+}
 
 void main()
 {
