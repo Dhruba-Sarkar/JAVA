@@ -269,4 +269,309 @@ class Main {
         return ans;
     }
 
+    // Infix evaluation
+    // https://www.geeksforgeeks.org/problems/fun-with-expresions2523/1
+    class Solution {
+        public int precendence(char ch) {
+            if (ch == '/' || ch == '*') {
+                return 2;
+            } else if (ch == '+' || ch == '-') {
+                return 1;
+            }
+            return 0;
+        }
+
+        public int findRes(int v1, int v2, char op) {
+            if (op == '/') {
+                return v1 / v2;
+            } else if (op == '*') {
+                return v1 * v2;
+            } else if (op == '-') {
+                return v1 - v2;
+            } else {
+                return v1 + v2;
+            }
+        }
+
+        public int evaluateInfix(String[] arr) {
+            Stack<Integer> operands = new Stack<>();
+            Stack<Character> operators = new Stack<>();
+
+            for (int i = 0; i < arr.length; i++) {
+                char ch = arr[i].charAt(0);
+
+                if (ch == '/' || ch == '*' || ch == '-' || ch == '+') {
+                    while (operators.size() > 0 && precendence(operators.peek()) >= precendence(ch)) {
+                        char op = operators.pop();
+                        int v2 = operands.pop();
+                        int v1 = operands.pop();
+
+                        int res = findRes(v1, v2, op);
+
+                        operands.push(res);
+                    }
+
+                    operators.push(ch);
+                } else {
+                    operands.push(Integer.parseInt(arr[i]));
+                }
+            }
+
+            while (operators.size() > 0) {
+                char op = operators.pop();
+                int v2 = operands.pop();
+                int v1 = operands.pop();
+
+                int res = findRes(v1, v2, op);
+
+                operands.push(res);
+            }
+
+            return operands.peek();
+        }
+    }
+
+    // Leetcode 227 (Basic calculator)
+    class Solution1 {
+        public int precendence(char ch) {
+            if (ch == '/' || ch == '*') {
+                return 2;
+            } else if (ch == '+' || ch == '-') {
+                return 1;
+            }
+            return 0;
+        }
+
+        public int findRes(int v1, int v2, char op) {
+            if (op == '/') {
+                return v1 / v2;
+            } else if (op == '*') {
+                return v1 * v2;
+            } else if (op == '-') {
+                return v1 - v2;
+            } else {
+                return v1 + v2;
+            }
+        }
+
+        public int calculate(String s) {
+            Stack<Integer> operands = new Stack<>();
+            Stack<Character> operators = new Stack<>();
+
+            for (int i = 0; i < s.length(); i++) {
+                char ch = s.charAt(i);
+
+                if (Character.isDigit(ch)) {
+                    int j = i;
+                    int num = 0;
+
+                    while (j < s.length() && Character.isDigit(s.charAt(j))) {
+                        num = num * 10 + (s.charAt(j) - '0');
+                        j++;
+                    }
+
+                    operands.push(num);
+                    i = j - 1;
+                } else if (ch == '/' || ch == '*' || ch == '-' || ch == '+') {
+                    while (operators.size() > 0 && precendence(operators.peek()) >= precendence(ch)) {
+                        char op = operators.pop();
+                        int v2 = operands.pop();
+                        int v1 = operands.pop();
+
+                        int res = findRes(v1, v2, op);
+
+                        operands.push(res);
+                    }
+
+                    operators.push(ch);
+                }
+            }
+
+            while (operators.size() > 0) {
+                char op = operators.pop();
+                int v2 = operands.pop();
+                int v1 = operands.pop();
+
+                int res = findRes(v1, v2, op);
+
+                operands.push(res);
+            }
+
+            return operands.peek();
+        }
+    }
+
+    // Infix to prefix conversion
+    // https://www.geeksforgeeks.org/problems/infix-to-prefix-notation/1
+    class Solution2 {
+        public static int precendence(char ch) {
+            if (ch == '^') {
+                return 3;
+            }
+            if (ch == '/' || ch == '*') {
+                return 2;
+            } else if (ch == '+' || ch == '-') {
+                return 1;
+            }
+            return 0;
+        }
+
+        static String infixToPrefix(String s) {
+            Stack<String> operands = new Stack<>();
+            Stack<Character> operators = new Stack<>();
+
+            for (int i = 0; i < s.length(); i++) {
+                char ch = s.charAt(i);
+
+                if (ch == '(' || ch == '^') {
+                    operators.push(ch);
+                } else if (ch == '/' || ch == '*' || ch == '-' || ch == '+') {
+                    while (operators.size() > 0 && precendence(operators.peek()) >= precendence(ch)) {
+                        char op = operators.pop();
+                        String v2 = operands.pop();
+                        String v1 = operands.pop();
+
+                        String res = op + v1 + v2;
+
+                        operands.push(res);
+                    }
+
+                    operators.push(ch);
+                } else if (ch == ')') {
+                    while (operators.peek() != '(') {
+                        char op = operators.pop();
+                        String v2 = operands.pop();
+                        String v1 = operands.pop();
+
+                        String res = op + v1 + v2;
+
+                        operands.push(res);
+                    }
+                    operators.pop(); // removing '('
+                } else {
+                    operands.push(ch + "");
+                }
+            }
+
+            while (operators.size() > 0) {
+                char op = operators.pop();
+                String v2 = operands.pop();
+                String v1 = operands.pop();
+
+                String res = op + v1 + v2;
+
+                operands.push(res);
+            }
+
+            return operands.peek();
+        }
+    }
+
+    // GFG infix evaluation
+    // https://www.geeksforgeeks.org/problems/fun-with-expresions2523/1
+    class Solution3 {
+        public int precendence(char ch) {
+            if (ch == '^') {
+                return 3;
+            } else if (ch == '/' || ch == '*') {
+                return 2;
+            } else if (ch == '+' || ch == '-') {
+                return 1;
+            }
+
+            return 0;
+        }
+
+        public int findRes(int v1, int v2, char op) {
+            if (op == '/') {
+                return v1 / v2;
+            } else if (op == '*') {
+                return v1 * v2;
+            } else if (op == '-') {
+                return v1 - v2;
+            } else if (op == '+') {
+                return v1 + v2;
+            } else {
+                return (int) Math.pow(v1, v2);
+            }
+        }
+
+        public int evaluateInfix(String[] arr) {
+            Stack<Integer> operands = new Stack<>();
+            Stack<Character> operators = new Stack<>();
+
+            for (int i = 0; i < arr.length; i++) {
+                char ch = arr[i].charAt(0);
+
+                if (ch == '^') { // power, wait for the next integer
+                    operators.push(ch);
+                } else if (ch == '/' || ch == '*' || ch == '-' || ch == '+') {
+                    while (operators.size() > 0 && precendence(operators.peek()) >= precendence(ch)) {
+                        char op = operators.pop();
+                        int v2 = operands.pop();
+                        int v1 = operands.pop();
+
+                        int res = findRes(v1, v2, op);
+                        operands.push(res);
+                    }
+
+                    operators.push(ch);
+                } else {
+                    operands.push(Integer.parseInt(arr[i]));
+                }
+            }
+
+            while (operators.size() > 0) {
+                char op = operators.pop();
+                int v2 = operands.pop();
+                int v1 = operands.pop();
+
+                int res = findRes(v1, v2, op);
+
+                operands.push(res);
+            }
+
+            return operands.peek();
+        }
+    }
+
+    // Infix evaluation
+    // https://www.geeksforgeeks.org/problems/prefix-evaluation/1
+    class Solution4 {
+        public int findRes(int v1, int v2, char op) {
+            if (op == '/') {
+                double d = v1 / (v2 * 1.0);
+                return (int) Math.floor(d);
+            } else if (op == '*') {
+                return v1 * v2;
+            } else if (op == '-') {
+                return v1 - v2;
+            } else if (op == '+') {
+                return v1 + v2;
+            } else {
+                return (int) Math.pow(v1, v2);
+            }
+        }
+
+        public int evaluatePrefix(String[] arr) {
+            Stack<Integer> operands = new Stack<>();
+
+            for (int i = arr.length - 1; i >= 0; i--) {
+                char ch = arr[i].charAt(0);
+
+                if (Character.isDigit(ch) || (arr[i].length() > 1 && ch == '-')) {
+                    operands.push(Integer.parseInt(arr[i]));
+                } else if (ch == '/' || ch == '*' || ch == '-' || ch == '+' || ch == '^') {
+                    int v1 = operands.pop();
+                    int v2 = operands.pop();
+
+                    int res = findRes(v1, v2, ch);
+
+                    operands.push(res);
+                }
+            }
+
+            return operands.peek();
+        }
+    }
 }
