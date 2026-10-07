@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 class Main {
@@ -573,5 +574,43 @@ class Main {
 
             return operands.peek();
         }
+    }
+
+    // Leetcode 56 -> Merge Intervals
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (int[] a, int[] b) -> {
+            // if(a[0] == b[0]){
+            // return b[1] - a[1]; // if 0th index equal, greater first idx will come before
+            // }
+            return a[0] - b[0]; // increasing order sort
+
+            // return b[0] - a[0]; -> decreasing order sort
+        });
+
+        Stack<int[]> st = new Stack<>();
+        st.push(intervals[0]);
+
+        for (int i = 1; i < intervals.length; i++) {
+            int[] prev = st.peek();
+            int[] curr = intervals[i];
+
+            if (prev[1] >= curr[0]) { // prev ka end time >= curr ka start time
+                prev[1] = Math.max(prev[1], curr[1]); // max of prev and curr end time
+            } else {
+                st.push(curr);
+            }
+        }
+
+        int[][] res = new int[st.size()][2];
+
+        for (int i = 0; i < res.length; i++) {
+            res[i][0] = st.peek()[0];
+            res[i][1] = st.peek()[1];
+
+            st.pop();
+        }
+
+        // we don't care about order, if you do, reverse the res array
+        return res;
     }
 }
