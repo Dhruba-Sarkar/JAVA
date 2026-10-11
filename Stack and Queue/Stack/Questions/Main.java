@@ -614,3 +614,79 @@ class Main {
         return res;
     }
 }
+
+// Leetcode 155 -> Min Stack
+class MinStack {
+    Stack<Integer> st;
+    Stack<Integer> minSt;
+
+    public MinStack() {
+        st = new Stack<>();
+        minSt = new Stack<>();
+    }
+
+    public void push(int value) {
+        if (st.size() == 0 || minSt.peek() >= value) {
+            minSt.push(value);
+        }
+        st.push(value);
+    }
+
+    public void pop() {
+        if (st.peek().equals(minSt.peek())) {
+            minSt.pop();
+        }
+        st.pop();
+    }
+
+    public int top() {
+        return st.peek();
+    }
+
+    public int getMin() {
+        return minSt.peek();
+    }
+}
+
+// Leetcode 155 -> Min Stack O(1) space
+class MinStack1 {
+    Stack<Long> st;
+    long min;
+
+    public MinStack1() {
+        st = new Stack<>();
+        min = -1;
+    }
+
+    public void push(int value) {
+        if (st.size() > 0 && value < min) {
+            st.push(value - (min - value));
+            min = value;
+        } else if (st.size() == 0) {
+            min = value;
+            st.push((long) (value));
+        } else {
+            st.push((long) (value));
+        }
+    }
+
+    public void pop() {
+        if (st.peek() < min) {
+            long curr_min = min;
+            long prev_min = 2 * curr_min - st.peek();
+            min = prev_min;
+        }
+        st.pop();
+    }
+
+    public int top() {
+        if (st.peek() < min) {
+            return (int) min;
+        }
+        return Math.toIntExact(st.peek());
+    }
+
+    public int getMin() {
+        return (int) min;
+    }
+}
