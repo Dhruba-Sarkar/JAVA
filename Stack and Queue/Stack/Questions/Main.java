@@ -613,80 +613,180 @@ class Main {
         // we don't care about order, if you do, reverse the res array
         return res;
     }
-}
 
-// Leetcode 155 -> Min Stack
-class MinStack {
-    Stack<Integer> st;
-    Stack<Integer> minSt;
+    // Leetcode 155 -> Min Stack
+    class MinStack {
+        Stack<Integer> st;
+        Stack<Integer> minSt;
 
-    public MinStack() {
-        st = new Stack<>();
-        minSt = new Stack<>();
-    }
-
-    public void push(int value) {
-        if (st.size() == 0 || minSt.peek() >= value) {
-            minSt.push(value);
+        public MinStack() {
+            st = new Stack<>();
+            minSt = new Stack<>();
         }
-        st.push(value);
-    }
 
-    public void pop() {
-        if (st.peek().equals(minSt.peek())) {
-            minSt.pop();
+        public void push(int value) {
+            if (st.size() == 0 || minSt.peek() >= value) {
+                minSt.push(value);
+            }
+            st.push(value);
         }
-        st.pop();
-    }
 
-    public int top() {
-        return st.peek();
-    }
+        public void pop() {
+            if (st.peek().equals(minSt.peek())) {
+                minSt.pop();
+            }
+            st.pop();
+        }
 
-    public int getMin() {
-        return minSt.peek();
-    }
-}
+        public int top() {
+            return st.peek();
+        }
 
-// Leetcode 155 -> Min Stack O(1) space
-class MinStack1 {
-    Stack<Long> st;
-    long min;
-
-    public MinStack1() {
-        st = new Stack<>();
-        min = -1;
-    }
-
-    public void push(int value) {
-        if (st.size() > 0 && value < min) {
-            st.push(value - (min - value));
-            min = value;
-        } else if (st.size() == 0) {
-            min = value;
-            st.push((long) (value));
-        } else {
-            st.push((long) (value));
+        public int getMin() {
+            return minSt.peek();
         }
     }
 
-    public void pop() {
-        if (st.peek() < min) {
-            long curr_min = min;
-            long prev_min = 2 * curr_min - st.peek();
-            min = prev_min;
-        }
-        st.pop();
-    }
+    // Leetcode 155 -> Min Stack O(1) space
+    class MinStack1 {
+        Stack<Long> st;
+        long min;
 
-    public int top() {
-        if (st.peek() < min) {
+        public MinStack1() {
+            st = new Stack<>();
+            min = -1;
+        }
+
+        public void push(int value) {
+            if (st.size() > 0 && value < min) {
+                st.push(value - (min - value));
+                min = value;
+            } else if (st.size() == 0) {
+                min = value;
+                st.push((long) (value));
+            } else {
+                st.push((long) (value));
+            }
+        }
+
+        public void pop() {
+            if (st.peek() < min) {
+                long curr_min = min;
+                long prev_min = 2 * curr_min - st.peek();
+                min = prev_min;
+            }
+            st.pop();
+        }
+
+        public int top() {
+            if (st.peek() < min) {
+                return (int) min;
+            }
+            return Math.toIntExact(st.peek());
+        }
+
+        public int getMin() {
             return (int) min;
         }
-        return Math.toIntExact(st.peek());
     }
 
-    public int getMin() {
-        return (int) min;
+    // Leetcode 503 -> NGR on circular Array
+    public int[] nextGreaterElements(int[] nums) {
+        int n = nums.length;
+
+        int[] res = new int[n];
+
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = 0; i < 2 * n; i++) {
+            while (st.size() > 0 && nums[st.peek()] < nums[i % n]) {
+                res[st.pop()] = nums[i % n];
+            }
+            if (i < n) {// Second ireration is also to find answers, not add to questions
+                st.push(i);
+            }
+        }
+        while (st.size() > 0) {
+            res[st.pop()] = -1;
+        }
+        return res;
+    }
+
+    // Leetcode 456 -> 132 Pattern O(N^2)
+    public int[] getMinSoFar(int[] nums) {
+        int n = nums.length;
+
+        int[] minSoFar = new int[n];
+        minSoFar[0] = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            minSoFar[i] = Math.min(nums[i], minSoFar[i - 1]);
+        }
+
+        return minSoFar;
+    }
+
+    public boolean find132pattern(int[] nums) {
+        int n = nums.length;
+
+        int[] minSoFar = getMinSoFar(nums);
+
+        for (int j = 1; j < n; j++) {
+            int firstNum = minSoFar[j - 1];
+            int secondNum = nums[j];
+
+            if (firstNum >= secondNum) {
+                continue;
+            }
+
+            for (int k = j + 1; k < n; k++) {
+                if (nums[k] < secondNum && nums[k] > firstNum) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // Leetcode 456 -> 132 Pattern O(N)
+    public int[] getMinSoFar1(int[] nums) {
+        int n = nums.length;
+
+        int[] minSoFar = new int[n];
+        minSoFar[0] = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            minSoFar[i] = Math.min(nums[i], minSoFar[i - 1]);
+        }
+
+        return minSoFar;
+    }
+
+    public boolean find132pattern1(int[] nums) {
+        int n = nums.length;
+
+        int[] minSoFar = getMinSoFar(nums);
+
+        Stack<Integer> possibleKValues = new Stack<>();
+        possibleKValues.push(nums[n - 1]);
+
+        for (int j = n - 2; j >= 1; j--) {
+            int firstNum = minSoFar[j - 1];
+
+            // removing elements smaller than firstNum
+            while (possibleKValues.size() > 0 && possibleKValues.peek() <= firstNum) {
+                possibleKValues.pop();
+            }
+
+            // possibleKValues.peek() is greater than first num and smaller than nums[j]
+            if (possibleKValues.size() > 0 && possibleKValues.peek() < nums[j]) {
+                return true;
+            }
+
+            possibleKValues.push(nums[j]); // you can be k in next iteration
+        }
+
+        return false;
     }
 }
