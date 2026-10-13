@@ -132,6 +132,33 @@ vector<int> nextGreaterElements(vector<int> &nums)
 
     return res;
 }
+
+// Leetcode 921 -> Minimum Add to Make Parentheses Valid
+int minAddToMakeValid(string s)
+{
+    int opening_bracket_req = 0;
+    int extra_opening_bracket = 0;
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        if (s[i] == '(')
+        {
+            extra_opening_bracket++;
+        }
+        else
+        {
+            if (extra_opening_bracket == 0)
+            {
+                opening_bracket_req++;
+            }
+            else
+            {
+                extra_opening_bracket--;
+            }
+        }
+    }
+    return extra_opening_bracket + opening_bracket_req;
+}
 void main()
 {
 }

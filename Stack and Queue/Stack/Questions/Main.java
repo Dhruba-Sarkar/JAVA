@@ -789,4 +789,101 @@ class Main {
 
         return false;
     }
+
+    // Leetcode 921 -> Minimum Add to Make Parentheses Valid
+    public int minAddToMakeValid(String s) {
+        int opening_bracket_req = 0;
+        int extra_opening_bracket = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                extra_opening_bracket++;
+            } else {
+                if (extra_opening_bracket == 0) {
+                    opening_bracket_req++;
+                } else {
+                    extra_opening_bracket--;
+                }
+            }
+        }
+        return extra_opening_bracket + opening_bracket_req;
+    }
+
+    // Leetcode 735 -> Asteroid Collision
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = 0; i < asteroids.length; i++) {
+            int power = asteroids[i];
+
+            if (power > 0) {
+                st.push(power);
+            } else {
+                boolean pushNegative = true;
+
+                while (st.size() > 0 && st.peek() > 0) {
+                    if (st.peek() > -(power)) {
+                        pushNegative = false;
+                        break;
+                    } else if (st.peek() == -(power)) {
+                        st.pop();
+                        pushNegative = false;
+                        break;
+                    } else {
+                        st.pop();
+                    }
+                }
+                if (pushNegative) {
+                    st.push(power);
+                }
+            }
+        }
+
+        int resLength = st.size();
+        int[] ans = new int[resLength];
+
+        for (int i = resLength - 1; i >= 0; i--) {
+            ans[i] = st.pop();
+        }
+
+        return ans;
+    }
+
+    // Leetcode 402 -> Remove K Digits
+    public String removeKdigits(String num, int k) {
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = 0; i < num.length(); i++) {
+            int digit = num.charAt(i) - '0';
+            while (st.size() > 0 && k > 0 && st.peek() > digit) {
+                st.pop();
+                k--;
+            }
+            st.push(digit);
+        }
+        while (k > 0) {
+            st.pop();
+            k--;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        while (st.size() > 0) {
+            sb.append(st.pop());
+        }
+
+        int j = sb.length() - 1;
+
+        while (j >= 0 && sb.charAt(j) == '0') { // removing leading zeros
+            sb.deleteCharAt(j);
+            j--;
+        }
+
+        sb.reverse();
+
+        return sb.length() == 0 ? "0" : sb.toString();
+    }
+
+    // Leetcode 1021 -> Remove Outermost Parentheses
+
 }
