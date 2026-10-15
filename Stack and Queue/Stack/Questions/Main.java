@@ -885,5 +885,52 @@ class Main {
     }
 
     // Leetcode 1021 -> Remove Outermost Parentheses
+    public String removeOuterParentheses(String s) {
+        int n = s.length();
+        int a = 0;
 
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (ch == '(')
+                a++;
+            else
+                a--;
+            if (ch == '(' && a == 1) {
+                // outer most closing
+            } else if (ch == ')' && a == 0) {
+                // outer most opening
+            } else {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+
+    // Leetcode 1541 -> Minimum Insertions to Balance a Parentheses String
+    int minInsertions(String s) {
+        int n = s.length();
+        int extra_ob = 0;
+        int ob_req = 0;
+        int cb_req = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '(') {
+                extra_ob++;
+            } else {
+                if (i + 1 < n && s.charAt(i + 1) == ')') {
+                    i++;
+                } else {
+                    cb_req++;
+                }
+                if (extra_ob == 0) {
+                    ob_req++;
+                } else {
+                    extra_ob--;
+                }
+            }
+        }
+        return 2 * extra_ob + ob_req + cb_req;
+    }
 }
