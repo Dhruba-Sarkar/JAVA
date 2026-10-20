@@ -933,4 +933,34 @@ class Main {
         }
         return 2 * extra_ob + ob_req + cb_req;
     }
+
+    // Leetcode 678 -> Valid Parenthesis String
+    public boolean checkValidString(String s) {
+        int max = 0;
+        int min = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (ch == '(') {
+                max++;
+                min++;
+            } else if (ch == ')') {
+                max--;
+                min--;
+            } else {
+                max++; // considering * as '('
+                min--; // considering * as ')'
+            }
+
+            if (max < 0) { // more closing brackets was seen so far
+                return false;
+            }
+            if (min < 0) { // we consider some * to be ')' which we shouldn't have
+                min = 0;
+            }
+        }
+        return min == 0; // if min > 0, we had more opening brackets
+    }
+
 }
