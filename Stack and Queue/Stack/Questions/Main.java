@@ -963,4 +963,118 @@ class Main {
         return min == 0; // if min > 0, we had more opening brackets
     }
 
+    // Leetcode 856 -> Score of Parentheses
+    public int scoreOfParentheses(String s) {
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (ch == '(') {
+                st.push(-1);
+            } else {
+                int innerSum = 0;
+
+                while (st.peek() != -1) {
+                    innerSum += st.pop();
+                }
+
+                st.pop();
+
+                if (innerSum == 0) {
+                    st.push(1);
+                } else {
+                    st.push(2 * innerSum);
+                }
+            }
+        }
+
+        int res = 0;
+        while (!st.isEmpty()) {
+            res += st.pop();
+        }
+
+        return res;
+    }
+
+    // Leetcode 42 -> Trapping Rain Water
+    public int trap(int[] height) {
+        int n = height.length;
+
+        int[] lmax = new int[n];
+        int[] rmax = new int[n];
+
+        int max = 0;
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max, height[i]);
+
+            lmax[i] = max;
+        }
+        rmax[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            rmax[i] = Math.max(rmax[i + 1], height[i]);
+        }
+
+        int totalWater = 0;
+
+        for (int i = 1; i < n - 1; i++) {
+            int totalHeightOfWaterAllowed = Math.min(lmax[i - 1], rmax[i + 1]);
+            int currentWaterLeverl = Math.max(totalHeightOfWaterAllowed - height[i], 0);
+            totalWater += currentWaterLeverl;
+        }
+        return totalWater;
+    }
+
+    // Leetcode 42 -> Trapping Rain Water with Stack
+    public int trap1(int[] height) {
+        Stack<Integer> st = new Stack<>();
+        int totalWater = 0;
+        st.push(-1);
+
+        for (int i = 0; i < height.length; i++) {
+            while (st.peek() != -1 && height[st.peek()] <= height[i]) {
+                int poppedIdx = st.pop();
+
+                int rightGreater = height[i];
+
+                if (st.peek() == -1) { // no left greater wall
+                    break;
+                }
+                int leftGreater = height[st.peek()];
+
+                int totalHeightOfWaterAllowed = Math.min(rightGreater, leftGreater);
+
+                int waterHeight = totalHeightOfWaterAllowed - height[poppedIdx];
+                int width = i - st.peek() - 1; // rightGreater - leftGreater - 1
+
+                totalWater += waterHeight * width;
+            }
+            st.push(i);
+        }
+        return totalWater;
+    }
+
+    // Leetcode 42 -> Trapping Rain Water O(1) space
+    public int trap2(int[] height) {
+        int n = height.length;
+        int left = 0;
+        int right = n - 1;
+        int lMax = height[0];
+        int rMax = height[n - 1];
+        int totalWater = 0;
+
+        while (left < right) {
+            lMax = Math.max(lMax, height[left]);
+            rMax = Math.max(rMax, height[right]);
+
+            if (lMax <= rMax) {
+                totalWater += lMax - height[left];
+                left++;
+            } else {
+                totalWater += rMax - height[right];
+                right--;
+            }
+        }
+        return totalWater;
+    }
+
 }
