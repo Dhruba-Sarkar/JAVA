@@ -113,6 +113,41 @@ public class Questions {
         return ans.stream().mapToInt(i -> i).toArray();
     }
 
+    // Leetcode 128-> Longest Consecutive Sequence
+    public int longestConsecutive(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+
+        for (int e : nums) {
+            set.add(e);
+        }
+
+        int res = 0;
+
+        for (int num : nums) {
+            if (set.contains(num) == false)
+                continue;
+
+            int left = num - 1;
+            int right = num + 1;
+
+            set.remove(num); // we won't need it again
+
+            while (set.contains(left)) {
+                set.remove(left);
+                left--;
+            }
+
+            while (set.contains(right)) {
+                set.remove(right);
+                right++;
+            }
+
+            res = Math.max(res, right - left - 1);
+        }
+
+        return res;
+    }
+
     public static void main(String[] args) {
 
     }
