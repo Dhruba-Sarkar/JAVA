@@ -34,4 +34,20 @@ public class Questions {
 
         return pq.peek();
     }
+
+    // Kth Smallest
+    // (https://www.geeksforgeeks.org/problems/kth-smallest-element5635/1)
+    public int kthSmallest(int[] arr, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+        for (int e : arr) {
+            pq.add(e);
+
+            if (pq.size() > k) {
+                pq.remove();
+            }
+        }
+
+        return pq.peek();
+    }
 }
